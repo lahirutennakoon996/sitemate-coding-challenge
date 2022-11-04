@@ -96,13 +96,13 @@ class ConfirmationDialog extends HTMLElement {
         this._modal = this.shadowRoot.querySelector(".modal");
         this._yes = this.shadowRoot.querySelector(".msg-yes");
         this._cancel = this.shadowRoot.querySelector(".msg-cancel");
-        this.shadowRoot.querySelector("button").addEventListener('click', this._showModal.bind(this));
+        this.shadowRoot.querySelector(".click-to-confirm-btn").addEventListener('click', this._showModal.bind(this));
         this.shadowRoot.querySelector(".confirm").addEventListener('click', this._confirmModal.bind(this));
         this.shadowRoot.querySelector(".cancel").addEventListener('click', this._cancelModal.bind(this));
     }
 
     disconnectedCallback() {
-        this.shadowRoot.querySelector("button").removeEventListener('click', this._showModal);
+        this.shadowRoot.querySelector(".click-to-confirm-btn").removeEventListener('click', this._showModal);
         this.shadowRoot.querySelector(".confirm").removeEventListener('click', this._confirmModal);
         this.shadowRoot.querySelector(".cancel").removeEventListener('click', this._cancelModal);
     }
