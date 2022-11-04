@@ -1,8 +1,9 @@
 class ConfirmationDialog extends HTMLElement {
     constructor() {
         super();
-        this._modalVisible = false;
         this._modal;
+        this._yes;
+        this._cancel;
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
         <style>            
@@ -17,6 +18,10 @@ class ConfirmationDialog extends HTMLElement {
                 height: 100%; 
                 overflow: auto; 
                 background-color: rgba(0,0,0,0.4); 
+            }
+            
+            .msg-yes, .msg-cancel {
+                display: none; 
             }
 
             /* Modal Content */
@@ -69,30 +74,41 @@ class ConfirmationDialog extends HTMLElement {
                 </div>
             </div>
         </div>
+        <p class="msg-yes">You just clicked "Yes"</p>    
+        <p class="msg-cancel">You just clicked "Cancel"</p>          
         `
     }
 
     connectedCallback() {
         this._modal = this.shadowRoot.querySelector(".modal");
+        this._yes = this.shadowRoot.querySelector(".msg-yes");
+        this._cancel = this.shadowRoot.querySelector(".msg-cancel");
         this.shadowRoot.querySelector("button").addEventListener('click', this._showModal.bind(this));
-        this.shadowRoot.querySelector(".confirm").addEventListener('click', this._hideModal.bind(this));
-        this.shadowRoot.querySelector(".cancel").addEventListener('click', this._hideModal.bind(this));
+        this.shadowRoot.querySelector(".confirm").addEventListener('click', this._confirmModal.bind(this));
+        this.shadowRoot.querySelector(".cancel").addEventListener('click', this._cancelModal.bind(this));
     }
 
     disconnectedCallback() {
         this.shadowRoot.querySelector("button").removeEventListener('click', this._showModal);
-        this.shadowRoot.querySelector(".confirm").removeEventListener('click', this._hideModal);
-        this.shadowRoot.querySelector(".cancel").removeEventListener('click', this._hideModal);
+        this.shadowRoot.querySelector(".confirm").removeEventListener('click', this._confirmModal);
+        this.shadowRoot.querySelector(".cancel").removeEventListener('click', this._cancelModal);
     }
 
     _showModal() {
-        this._modalVisible = true;
         this._modal.style.display = 'block';
     }
 
-    _hideModal() {
-        this._modalVisible = false;
+    _confirmModal() {
         this._modal.style.display = 'none';
+        this._yes.style.display = 'block';
+        this._cancel.style.display = 'none';
+    }
+
+    _cancelModal() {
+        this._modal.style.display = 'none';
+        this._yes.style.display = 'none';
+        this._cancel.style.display = 'block';
     }
 }
+
 customElements.define('confirmation-dialog', ConfirmationDialog);
