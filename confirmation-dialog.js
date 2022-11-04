@@ -6,7 +6,20 @@ class ConfirmationDialog extends HTMLElement {
         this._cancel;
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-        <style>            
+        <style>       
+            .click-to-confirm-btn {
+                border: none;
+                color: blue;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                background-color: gainsboro;
+            }   
+              
             .modal {
                 display: none; 
                 position: fixed; 
@@ -61,7 +74,7 @@ class ConfirmationDialog extends HTMLElement {
             }           
 
         </style>
-        <button>Click me</button>
+        <button class="click-to-confirm-btn">Click me</button>
         <div class="modal">
             <div class="modal-content">               
                 <div class="modal-body">
